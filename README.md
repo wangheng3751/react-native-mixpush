@@ -6,10 +6,13 @@
 由于使用任何一种Android推送都很难在APP进程被杀死后收到推送，只有集成各厂商提供的系统级别推送才能完成此任务,故考虑小米、华为、魅族手机使用官方推送，其他手机使用个推推送！
 
 安装：
+
     npm install --save react-native-mixpush-android
 
 使用：
+
     1、android/settings.gradle
+
     ...
     include ':react-native-mixpush-android'
     project(':react-native-mixpush-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mixpush-android')
@@ -67,4 +70,5 @@
         <meta-data   android:name="com.huawei.hms.client.appid"  android:value="你的APPID"/>
 
      5、注册推送
+
      待更新...
