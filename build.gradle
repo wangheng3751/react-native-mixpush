@@ -15,7 +15,6 @@ android {
             abiFilters "armeabi", "armeabi-v7a", "x86_64"
         }
         manifestPlaceholders = [
-                PACKAGE_NAME : "com.mixpush",
                 //测试环境
                 GETUI_APP_ID : "4PrFb29HZA7ROkO1wHNXB8",
                 GETUI_APP_KEY : "W5s9oBaCLYAV6dPRFbBa1",
