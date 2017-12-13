@@ -16,7 +16,7 @@
     include ':react-native-mixpush-android'
     project(':react-native-mixpush-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mixpush-android')
 
-    ## 2、app/build.gradle
+## 2、app/build.gradle
 
     manifestPlaceholders = [
             PACKAGE_NAME : "你的包名",
@@ -30,7 +30,7 @@
         compile project(":react-native-mixpush-android")
     }
 
-     ## 3、android/build.gradle
+## 3、android/build.gradle
      allprojects {
          repositories {
              mavenLocal()
@@ -45,8 +45,8 @@
          }
      }
 
-     ## 4、AndroidManifest.xml
-     ### manifest节点下添加：
+## 4、AndroidManifest.xml
+### manifest节点下添加：
         <!--小米推送-->
          <permission android:name="${PACKAGE_NAME}.permission.MIPUSH_RECEIVE" android:protectionLevel="signature" />
          <uses-permission android:name="${PACKAGE_NAME}.permission.MIPUSH_RECEIVE" />
@@ -64,13 +64,13 @@
          <uses-permission android:name="${PACKAGE_NAME}.permission.C2D_MESSAGE"/>
          <!--魅族推送END-->
 
-     ### application节点下添加：
+### application节点下添加：
         <!--华为推送配置begin-->
         <meta-data   android:name="com.huawei.hms.client.appid"  android:value="你的APPID"/>
 
-     ## 5、注册推送
+## 5、注册推送
 
-        ### MainApplication中引用组件：
+### MainApplication中引用组件：
 
         import com.duanglink.rnmixpush.MixPushReactPackage;
 
@@ -83,7 +83,7 @@
             }
           };
 
-          ### MainActivity中注册推送：
+### MainActivity中注册推送：
 
           import com.duanglink.huaweipush.HuaweiPushActivity;
 
@@ -99,7 +99,7 @@
                 ...
           }
 
-        ## 6.React-Native客户端接收事件：
+## 6.React-Native客户端接收事件：
 
         var { NativeAppEventEmitter } = require('react-native');
         this.receiveRemoteNotificationSub = NativeAppEventEmitter.addListener(
