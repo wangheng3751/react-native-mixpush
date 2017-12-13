@@ -71,7 +71,11 @@
 ### application节点下添加：
         <!--华为推送配置begin-->
         <meta-data   android:name="com.huawei.hms.client.appid"  android:value="你的APPID"/>
-
+        <provider android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="${PACKAGE_NAME}.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+        </provider>
 ## 5、注册推送
 
 ### MainApplication中引用组件：
@@ -94,6 +98,9 @@
     public class MainActivity extends HuaweiPushActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
+            if(savedInstanceState==null){
+                savedInstanceState=new Bundle();
+            }
             savedInstanceState.putString("meizuAppId","魅族AppId");
             savedInstanceState.putString("meizuAppKey","魅族AppKey");
             savedInstanceState.putString("xiaomiAppId","小米AppId");
@@ -110,8 +117,7 @@
             'receiveRemoteNotification',
             (notification) => {
                     Alert.alert('消息通知',JSON.stringify(notification));
-                    break;
-                }
+            }
     );
 
 
