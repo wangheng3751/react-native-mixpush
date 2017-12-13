@@ -114,7 +114,7 @@
 
 
 
-# 6.特别说明
+# 特别说明
 
    本项目参考了另外一个大神的开源项目 
    [joyrun/MixPush](https://github.com/joyrun/MixPush) !
