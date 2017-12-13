@@ -30,11 +30,6 @@
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity>
-        <provider android:name="com.huawei.hms.update.provider.UpdateProvider"
-            android:authorities="com.mixpush.hms.update.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" >
-        </provider>
         <receiver android:name="com.duanglink.huaweipush.HuaweiPushMessageReceiver" >
             <intent-filter>
                 <!-- 必须,用于接收TOKEN -->
