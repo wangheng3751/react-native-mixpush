@@ -10,7 +10,7 @@
 
 # 使用：
 
-    ## 1、android/settings.gradle
+## 1、android/settings.gradle
 
     ...
     include ':react-native-mixpush-android'
