@@ -33,9 +33,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
     private HuaweiApiClient client;
     //作用同startactivityforresult方法中的requestcode
     private static final int REQUEST_HMS_RESOLVE_ERROR = 1000;
-    //如果开发者在onConnectionFailed调用了resolveError接口，那么错误结果会通过onActivityResult返回
-    //具体的返回码通过该字段获取
-    public static final String EXTRA_RESULT = "intent.extra.RESULT";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +47,11 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                         .build();
             client.connect();
         }if(Build.BRAND.equalsIgnoreCase("xiaomi")){
-            MiPushManager mipush=new MiPushManager("2882303761517677749","5231767711749");
+            MiPushManager mipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
             mipush.registerPush(this.getApplicationContext());
         }
         if(Build.BRAND.equalsIgnoreCase("meizu")){
-            FlymePushManager meizupush=new FlymePushManager("111821","2110492f96964fb986a9c2cc6d680efe");
+            FlymePushManager meizupush=new FlymePushManager(savedInstanceState.getString("meizuAppId"),savedInstanceState.getString("meizuAppKey"));
             meizupush.registerPush(this.getApplicationContext());
         } else{
             GeTuiManager getui=new GeTuiManager();
