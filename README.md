@@ -94,6 +94,9 @@
     public class MainActivity extends HuaweiPushActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
+            if(savedInstanceState==null){
+                savedInstanceState=new Bundle();
+            }
             savedInstanceState.putString("meizuAppId","魅族AppId");
             savedInstanceState.putString("meizuAppKey","魅族AppKey");
             savedInstanceState.putString("xiaomiAppId","小米AppId");
