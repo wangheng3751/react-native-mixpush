@@ -39,7 +39,6 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
         try {
             //CP可以自己解析消息内容，然后做相应的处理
             String content = new String(msg, "UTF-8");
-            Toast.makeText(context, "收到PUSH透传消息,消息内容为:" + content, Toast.LENGTH_SHORT).show();
             Log.i(TAG, "收到PUSH透传消息,消息内容为:" + content);
         } catch (Exception e) {
             e.printStackTrace();

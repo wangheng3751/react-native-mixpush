@@ -67,7 +67,6 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
     @Override
     public void onConnected() {
         //华为移动服务client连接成功，在这边处理业务自己的事件
-        Toast.makeText(getApplicationContext(), "HuaweiApiClient 连接成功", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "HuaweiApiClient 连接成功");
         getTokenAsyn();
     }
@@ -84,7 +83,6 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
 
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
-        Toast.makeText(getApplicationContext(),  "HuaweiApiClient连接失败，错误码：" + arg0.getErrorCode(), Toast.LENGTH_SHORT).show();
         Log.i(TAG, "HuaweiApiClient连接失败，错误码：" + arg0.getErrorCode());
         if(HuaweiApiAvailability.getInstance().isUserResolvableError(arg0.getErrorCode())) {
             HuaweiApiAvailability.getInstance().resolveError(this, arg0.getErrorCode(), REQUEST_HMS_RESOLVE_ERROR);
@@ -107,12 +105,11 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
             @Override
             public void onResult(TokenResult result) {
                 if(result.getTokenRes().getRetCode() == 0) {
-                    Toast.makeText(getApplicationContext(),  "获取Token成功" , Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "获取Token成功,token:"+result.getTokenRes().getToken());
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),  "获取Token失败" , Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "获取Token失败");
                 }
-             //Log.i(TAG, "获取Token成功,token:"+result.getTokenRes().getToken());
              //getPushStatus();
             //这边的结果只表明接口调用成功，是否能收到响应结果只在广播中接收
             }
@@ -134,7 +131,6 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
         Log.i(TAG, "开始获取PUSH连接状态");
         new Thread() {
             public void run() {
-                Toast.makeText(getApplicationContext(),  "开始获取PUSH连接状态" , Toast.LENGTH_SHORT).show();
                 HuaweiPush.HuaweiPushApi.getPushState(client);
             };
         }.start();
