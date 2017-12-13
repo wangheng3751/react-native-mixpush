@@ -103,7 +103,7 @@
         ...
     }
 
-## 6.React-Native客户端接收事件：
+## 6、React-Native客户端接收事件：
 
     var { NativeAppEventEmitter } = require('react-native');
     this.receiveRemoteNotificationSub = NativeAppEventEmitter.addListener(
