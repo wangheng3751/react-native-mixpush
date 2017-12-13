@@ -31,6 +31,7 @@
     }
 
 ## 3、android/build.gradle
+
      allprojects {
          repositories {
              mavenLocal()
@@ -46,6 +47,7 @@
      }
 
 ## 4、AndroidManifest.xml
+
 ### manifest节点下添加：
         <!--小米推送-->
          <permission android:name="${PACKAGE_NAME}.permission.MIPUSH_RECEIVE" android:protectionLevel="signature" />
@@ -72,44 +74,48 @@
 
 ### MainApplication中引用组件：
 
-        import com.duanglink.rnmixpush.MixPushReactPackage;
+import com.duanglink.rnmixpush.MixPushReactPackage;
 
-        protected List<ReactPackage> getPackages() {
-              return Arrays.<ReactPackage>asList(
-                  new MainReactPackage(),
-                  ...
-                  new MixPushReactPackage()
-              );
-            }
-          };
+protected List<ReactPackage> getPackages() {
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+          ...
+          new MixPushReactPackage()
+      );
+    }
+  };
 
 ### MainActivity中注册推送：
 
-          import com.duanglink.huaweipush.HuaweiPushActivity;
+import com.duanglink.huaweipush.HuaweiPushActivity;
 
-          public class MainActivity extends HuaweiPushActivity {
-                @Override
-                public void onCreate(Bundle savedInstanceState) {
-                    savedInstanceState.putString("meizuAppId","魅族AppId");
-                    savedInstanceState.putString("meizuAppKey","魅族AppKey");
-                    savedInstanceState.putString("xiaomiAppId","小米AppId");
-                    savedInstanceState.putString("xiaomiAppKey","小米AppKey");
-                    super.onCreate(savedInstanceState);
-                }
-                ...
-          }
+public class MainActivity extends HuaweiPushActivity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        savedInstanceState.putString("meizuAppId","魅族AppId");
+        savedInstanceState.putString("meizuAppKey","魅族AppKey");
+        savedInstanceState.putString("xiaomiAppId","小米AppId");
+        savedInstanceState.putString("xiaomiAppKey","小米AppKey");
+        super.onCreate(savedInstanceState);
+    }
+    ...
+}
 
 ## 6.React-Native客户端接收事件：
 
-        var { NativeAppEventEmitter } = require('react-native');
-        this.receiveRemoteNotificationSub = NativeAppEventEmitter.addListener(
-                'receiveRemoteNotification',
-                (notification) => {
-                        Alert.alert('消息通知',JSON.stringify(notification));
-                        break;
-                    }
-        );
+var { NativeAppEventEmitter } = require('react-native');
+this.receiveRemoteNotificationSub = NativeAppEventEmitter.addListener(
+        'receiveRemoteNotification',
+        (notification) => {
+                Alert.alert('消息通知',JSON.stringify(notification));
+                break;
+            }
+);
 
 
 
+# 6.特别说明
 
+    本项目参考了另外一个大神的开源项目[joyrun/MixPush](https://github.com/joyrun/MixPush) !
+    
+    由于本人非原生开发者,不妥之处请指正,邮箱：wangheng3751@qq.com !
