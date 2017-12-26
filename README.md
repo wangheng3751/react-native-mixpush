@@ -128,10 +128,10 @@
     MixPush.unsetAlias(alias); //取消设置别名<br>
     MixPush.setTags(tags); //设置用户标签<br>
     MixPush.unsetTags(tags); //取消设置用户标签<br>
-    MixPush.getClientId(); //获取客户端ID<br> 
+    MixPush.getClientId(); //获取客户端ID<br>    
+>以上方法均不支持华为手机<br>
     
->以上方法均不支持华为手机
-    
+    
     说明：getClientId获取到的ID为用户在推送平台的唯一标识（小米：regId，魅族：pushId;个推：clientId），用于定向推送;<br>
     
 >此外,所有推送平台在APP推送注册成功后会往客户端发送一次注册成功事件(包含华为:deviceToken)，事件名为:"receiveClientId",并携带clientId,可使用该事件与getClientId方法配合使用达到获取clientId的目的。<br>
