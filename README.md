@@ -125,9 +125,13 @@
     import MixPush from 'react-native-mixpush-android';
     
     MixPush.setAlias(alias); //设置别名
+    
     MixPush.unsetAlias(alias); //取消设置别名
+    
     MixPush.setTags(tags); //设置用户标签
+    
     MixPush.unsetTags(tags); //取消设置用户标签
+    
     MixPush.getClientId(); //获取客户端ID，华为手机不支持此方法！
     
     说明：getClientId获取到的ID为用户在推送平台的唯一标识（小米：regId，魅族：pushId;个推：clientId），用于定向推送;
