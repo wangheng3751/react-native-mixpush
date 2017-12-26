@@ -54,6 +54,11 @@ public class FlymePushManager implements MixPushManager {
     }
 
     @Override
+    public String getClientId(Context context) {
+        return  PushManager.getPushId(context);
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }

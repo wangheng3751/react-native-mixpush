@@ -62,6 +62,11 @@ public class MiPushManager implements MixPushManager {
     }
 
     @Override
+    public String getClientId(Context context) {
+       return  MiPushClient.getRegId(context);
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }

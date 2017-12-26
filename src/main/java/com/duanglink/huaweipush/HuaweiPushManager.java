@@ -5,8 +5,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.duanglink.rnmixpush.HttpHelpers;
+import com.duanglink.rnmixpush.MixPushManager;
 import com.huawei.hms.api.HuaweiApiClient;
 import com.huawei.hms.support.api.push.HuaweiPush;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,13 +17,61 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * Created by wangheng on 2017/11/22.
  */
-public class HuaweiPushManager {
+public class HuaweiPushManager implements MixPushManager {
     private static String appId="100147479";
     private static String appSecret="4fd1cf7269547184941d584ee6063f0d";
+    public static final String NAME = "huaweipush";
+
+    public HuaweiPushManager(String appId, String appSecret) {
+        //this.appId = appId;
+        //this.appSecret = appSecret;
+    }
+
+    @Override
+    public void registerPush(Context context) {
+
+    }
+
+    @Override
+    public void unRegisterPush(Context context) {
+
+    }
+
+    @Override
+    public void setAlias(Context context, String alias) {
+
+    }
+
+    @Override
+    public void unsetAlias(Context context, String alias) {
+
+    }
+
+    @Override
+    public void setTags(Context context, String... tags) {
+
+    }
+
+    @Override
+    public void unsetTags(Context context, String... tags) {
+
+    }
+
+    @Override
+    public String getClientId(Context context) {
+        return  "";
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
     public static String refreshToken() throws IOException, JSONException
     {
         String tokenUrl="https://login.vmall.com/oauth2/token";

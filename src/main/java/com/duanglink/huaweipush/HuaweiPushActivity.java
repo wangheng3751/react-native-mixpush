@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.duanglink.flymepush.FlymePushManager;
 import com.duanglink.getui.GeTuiManager;
 import com.duanglink.mipush.MiPushManager;
+import com.duanglink.rnmixpush.MixPushMoudle;
 import com.facebook.react.BuildConfig;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
@@ -31,7 +32,6 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
     public static final String TAG = "HuaweiPushActivity";
     //华为移动服务Client
     private HuaweiApiClient client;
-    //作用同startactivityforresult方法中的requestcode
     private static final int REQUEST_HMS_RESOLVE_ERROR = 1000;
 
     @Override
@@ -39,6 +39,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
         super.onCreate(savedInstanceState);
         //判断华为手机接入
         if(Build.BRAND.equalsIgnoreCase("huawei")){
+            MixPushMoudle.pushManager=new HuaweiPushManager("","");
                 //连接回调以及连接失败监听
             client = new HuaweiApiClient.Builder(this)
                         .addApi(HuaweiPush.PUSH_API)
@@ -48,13 +49,16 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
             client.connect();
         }if(Build.BRAND.equalsIgnoreCase("xiaomi")){
             MiPushManager mipush=new MiPushManager(savedInstanceState.getString("xiaomiAppId"),savedInstanceState.getString("xiaomiAppKey"));
+            MixPushMoudle.pushManager=mipush;
             mipush.registerPush(this.getApplicationContext());
         }
         if(Build.BRAND.equalsIgnoreCase("meizu")){
             FlymePushManager meizupush=new FlymePushManager(savedInstanceState.getString("meizuAppId"),savedInstanceState.getString("meizuAppKey"));
+            MixPushMoudle.pushManager=meizupush;
             meizupush.registerPush(this.getApplicationContext());
         } else{
             GeTuiManager getui=new GeTuiManager();
+            MixPushMoudle.pushManager=getui;
             getui.registerPush(this.getApplicationContext());
         }
     }
@@ -110,8 +114,6 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
                 else{
                     Log.i(TAG, "获取Token失败");
                 }
-             //getPushStatus();
-            //这边的结果只表明接口调用成功，是否能收到响应结果只在广播中接收
             }
         });
     }

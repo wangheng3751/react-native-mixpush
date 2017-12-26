@@ -63,6 +63,11 @@ public class GeTuiManager implements MixPushManager {
     }
 
     @Override
+    public String getClientId(Context context) {
+        return  PushManager.getInstance().getClientid(context);
+    }
+
+    @Override
     public String getName() {
         return NAME;
     }

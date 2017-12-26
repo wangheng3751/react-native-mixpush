@@ -20,4 +20,6 @@ public interface MixPushManager {
     void unsetTags(Context context, String... tags);
 
     String getName();
+
+    String getClientId(Context context);
 }

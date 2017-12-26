@@ -25,6 +25,7 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
     public static final String EVENT_TYPE_PAYLOAD = "payload";
     public static final String EVENT_RECEIVE_CLIENTID ="receiveClientId";
     private static ReactApplicationContext mRAC;
+    public static MixPushManager pushManager;
     public MixPushMoudle(ReactApplicationContext reactContext) {
         super(reactContext);
         mRAC=reactContext;
@@ -47,6 +48,43 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
     public static void sendEvent(String eventName, @Nullable String params){
         mRAC.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
+    }
+
+    @ReactMethod
+    public void  setAlias(String alias){
+        if(pushManager!=null){
+            pushManager.setAlias(mRAC,alias);
+        }
+    }
+
+    @ReactMethod
+    public void  unsetAlias(String alias){
+        if(pushManager!=null){
+            pushManager.unsetAlias(mRAC,alias);
+        }
+    }
+
+    @ReactMethod
+    public void  setTags(String tags){
+        if(pushManager!=null){
+            pushManager.setTags(mRAC,tags);
+        }
+    }
+
+    @ReactMethod
+    public void  unsetTags(String tags){
+        if(pushManager!=null){
+            pushManager.unsetTags(mRAC,tags);
+        }
+    }
+
+    @ReactMethod
+    public void  getClientId(final Callback callback){
+        String clientId="";
+        if(pushManager!=null){
+            clientId= pushManager.getClientId(mRAC);
+        }
+        callback.invoke(clientId);
     }
 
     @ReactMethod
