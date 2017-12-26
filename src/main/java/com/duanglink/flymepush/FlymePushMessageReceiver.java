@@ -69,8 +69,9 @@ public class FlymePushMessageReceiver extends MzPushMessageReceiver {
 
     @Override
     public void onRegisterStatus(Context context,RegisterStatus registerStatus) {
-        Log.i(TAG, "onRegisterStatus " + registerStatus);
         //新版订阅回调
+        Log.i(TAG, "onRegisterStatus " + registerStatus);
+        MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, registerStatus.getPushId());
     }
 
     @Override
