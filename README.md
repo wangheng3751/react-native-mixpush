@@ -132,7 +132,7 @@
     
     说明：getClientId获取到的ID为用户在推送平台的唯一标识（小米：regId，魅族：pushId;个推：clientId），用于定向推送;<br>
     
->此外,所有推送平台在APP推送注册成功后会往客户端发送一次注册成功事件(包含华为:deviceToken)，事件名为:"receiveClientId",并携带clientId,可使用该事件与getClientId方法配合使用达到目的。<br>
+>此外,所有推送平台在APP推送注册成功后会往客户端发送一次注册成功事件(包含华为:deviceToken)，事件名为:"receiveClientId",并携带clientId,可使用该事件与getClientId方法配合使用达到获取clientId的目的。<br>
     
     实例：
     
@@ -145,7 +145,7 @@
     NativeAppEventEmitter.addListener(
         'receiveClientId',
         (cid) => {
-             alert("cid:"+cid);//自行处理cid代码                                
+             alert("cid:"+cid);//自行处理cid代码
         }
     );
         
