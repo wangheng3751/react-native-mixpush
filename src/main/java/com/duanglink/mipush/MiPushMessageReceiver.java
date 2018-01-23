@@ -29,13 +29,7 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
         mMessage = message.getContent();
-        if(!TextUtils.isEmpty(message.getTopic())) {
-            mTopic=message.getTopic();
-        } else if(!TextUtils.isEmpty(message.getAlias())) {
-            mAlias=message.getAlias();
-        } else if(!TextUtils.isEmpty(message.getUserAccount())) {
-            mUserAccount=message.getUserAccount();
-        }
+        MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage message) {

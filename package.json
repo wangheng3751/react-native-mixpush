@@ -1,0 +1,22 @@
+﻿{
+  "name": "react-native-mixpush-android",
+  "version": "1.0.6",
+  "description": "集成小米推送、华为推送、魅族推送及个推推送的React-Native版本!",
+  "main": "index.js",
+  "keywords": [
+    "push","mixpush","react-native-push"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangheng3751/react-native-mixpush.git"
+  },
+  "author": "wangheng3751",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangheng3751/react-native-mixpush/issues"
+  },
+  "homepage": "https://github.com/wangheng3751/react-native-mixpush#readme"
+}

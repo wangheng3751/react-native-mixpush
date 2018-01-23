@@ -11,6 +11,9 @@ import com.duanglink.rnmixpush.MixPushMoudle;
 import com.huawei.hms.support.api.push.PushReceiver;
 import com.igexin.sdk.PushManager;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by wangheng on 2017/11/22.
  */
@@ -20,18 +23,19 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
     public static final String ACTION_UPDATEUI = "action.updateUI";
     @Override
     public void onToken(Context context, String token, Bundle extras) {
-        String belongId = extras.getString("belongId");
-        /*调试信息
-        Log.i(TAG, "belongId为:" + belongId);
-        Log.i(TAG, "Token为:" + token);
-        Toast.makeText(context, "Token为:" + token, Toast.LENGTH_SHORT).show();
-        */
-        MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, token);
-        Intent intent = new Intent();
-        intent.setAction(ACTION_UPDATEUI);
-        intent.putExtra("type", 1);
-        intent.putExtra("token", token);
-        context.sendBroadcast(intent);
+        Log.i(TAG, "得到Token为:" + token);
+        //Toast.makeText(context, "Token为:" + token, Toast.LENGTH_SHORT).show();
+        //MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, token);
+        //延时1秒后再发送事件，防止RN客户端还未初始化完成时在注册前就发送了事件
+        final String  stoken =token;
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, stoken);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);
     }
 
     @Override
@@ -40,6 +44,7 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
             //CP可以自己解析消息内容，然后做相应的处理
             String content = new String(msg, "UTF-8");
             Log.i(TAG, "收到PUSH透传消息,消息内容为:" + content);
+            MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, content);
         } catch (Exception e) {
             e.printStackTrace();
         }
