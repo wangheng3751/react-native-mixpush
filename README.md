@@ -6,6 +6,8 @@
 
 注：本项目仅适用于android平台(ios统一的apns推送机制较为稳定,只需自行选择一种推送集成即可)。
 
+>QQ交流群：516032289
+
 # 安装：
 
     npm install --save react-native-mixpush-android
