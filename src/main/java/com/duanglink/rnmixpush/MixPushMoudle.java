@@ -105,7 +105,7 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
             String result=HuaweiPushManager.sendPushMessage(deviceToken);
             JSONObject obj= new JSONObject(result);;
             String code = obj.getString("code");
-            if(code=="80000000"){
+            if(code.equals("80000000")){
                 showToast("消息发送成功");
             }else{
                 showToast("消息发送失败,code:"+code);
@@ -123,7 +123,7 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
             String result=GeTuiManager.sendPushMessage(cid);
             JSONObject obj= new JSONObject(result);;
             String code = obj.getString("result");
-            if(code=="ok"){
+            if(code.equals("ok")){
                 showToast("消息发送成功");
             }else{
                 showToast("消息发送失败,"+obj.getString("desc"));
@@ -141,7 +141,7 @@ public class MixPushMoudle extends ReactContextBaseJavaModule {
             String result= FlymePushManager.sendPushMessage(cid);
             JSONObject obj= new JSONObject(result);;
             String code = obj.getString("result");
-            if(code=="200"){
+            if(code.equals("200")){
                 showToast("消息发送成功");
             }else{
                 showToast("消息发送失败,"+obj.getString("message"));

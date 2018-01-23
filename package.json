@@ -1,6 +1,6 @@
 ﻿{
   "name": "react-native-mixpush-android",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "集成小米推送、华为推送、魅族推送及个推推送的React-Native版本!",
   "main": "index.js",
   "keywords": [

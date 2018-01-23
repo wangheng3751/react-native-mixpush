@@ -114,7 +114,7 @@ public class HuaweiPushActivity extends ReactActivity implements HuaweiApiClient
             @Override
             public void onResult(TokenResult result) {
                 if(result.getTokenRes().getRetCode() == 0) {
-                    Log.i(TAG, "获取Token成功,token:"+result.getTokenRes().getToken());
+                    Log.i(TAG, "获取Token成功");
                 }
                 else{
                     Log.i(TAG, "获取Token失败");
