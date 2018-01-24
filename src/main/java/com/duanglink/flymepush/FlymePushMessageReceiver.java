@@ -12,6 +12,9 @@ import com.meizu.cloud.pushsdk.platform.message.SubAliasStatus;
 import com.meizu.cloud.pushsdk.platform.message.SubTagsStatus;
 import com.meizu.cloud.pushsdk.platform.message.UnRegisterStatus;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by wangheng on 2017/11/22.
  */
@@ -23,7 +26,7 @@ public class FlymePushMessageReceiver extends MzPushMessageReceiver {
     @Override
     @Deprecated
     public void onRegister(Context context, String pushid) {
-        Log.i(TAG, "收到pushid： " + pushid);
+        Log.i(TAG, "得到pushId： " + pushid);
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, pushid);
         //应用在接受返回的pushid
     }
@@ -72,8 +75,9 @@ public class FlymePushMessageReceiver extends MzPushMessageReceiver {
     @Override
     public void onRegisterStatus(Context context,RegisterStatus registerStatus) {
         //新版订阅回调
-        Log.i(TAG, "onRegisterStatus " + registerStatus);
-        MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, registerStatus.getPushId());
+        String pushId= registerStatus.getPushId();
+        Log.i(TAG, "得到pushId：" + pushId);
+        MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, pushId);
     }
 
     @Override
@@ -102,7 +106,17 @@ public class FlymePushMessageReceiver extends MzPushMessageReceiver {
     @Override
     public void onNotificationClicked(Context context, String title, String content, String selfDefineContentString) {
         //通知栏消息点击回调
-        DebugLogger.i(TAG,"onNotificationClicked title "+title + "content "+content + " selfDefineContentString "+selfDefineContentString);
+        Log.i(TAG, "点击通知栏消息："+content+",自定义消息："+selfDefineContentString);
+        //MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, selfDefineContentString);
+        final  String msg=selfDefineContentString;
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+            MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, msg);
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);
     }
 
     @Override
