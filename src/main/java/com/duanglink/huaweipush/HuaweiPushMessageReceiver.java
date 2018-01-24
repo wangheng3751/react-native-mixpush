@@ -66,7 +66,7 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
 
     @Override
     public void onPushState(Context context, boolean pushState) {
-        Log.i("TAG", "Push连接状态为:" + pushState);
+        Log.i(TAG, "Push连接状态为:" + pushState);
         //Toast.makeText(context, "Push连接状态为:" + pushState, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
         intent.setAction(ACTION_UPDATEUI);

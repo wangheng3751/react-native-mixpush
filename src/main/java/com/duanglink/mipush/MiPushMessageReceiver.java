@@ -1,21 +1,26 @@
 package com.duanglink.mipush;
 
 import android.content.Context;
-import android.text.TextUtils;
-
+import android.content.Intent;
+import android.util.Log;
 import com.duanglink.rnmixpush.MixPushMoudle;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by wangheng on 2017/11/22.
  */
 public class MiPushMessageReceiver extends PushMessageReceiver {
+    private static final String TAG = "MiPushMessageReceiver";
     private String mRegId;
     private long mResultCode = -1;
     private String mReason;
@@ -29,29 +34,43 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
         mMessage = message.getContent();
+        Log.i(TAG, "收到透传消息： " + mMessage);
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
     }
     @Override
-    public void onNotificationMessageClicked(Context context, MiPushMessage message) {
+    public void onNotificationMessageClicked(Context context, MiPushMessage message)  {
         mMessage = message.getContent();
-        if(!TextUtils.isEmpty(message.getTopic())) {
-            mTopic=message.getTopic();
-        } else if(!TextUtils.isEmpty(message.getAlias())) {
-            mAlias=message.getAlias();
-        } else if(!TextUtils.isEmpty(message.getUserAccount())) {
-            mUserAccount=message.getUserAccount();
+        try {
+            final String extra=mapToJsonString(message.getExtra());
+            //JSONObject.
+            Log.i(TAG, "点击通知栏消息： " + mMessage+",透传消息："+extra);
+            //启动应用
+            Intent launchIntent = context.getPackageManager().
+                    getLaunchIntentForPackage(context.getPackageName());
+            launchIntent.setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            context.startActivity(launchIntent);
+            //发送事件
+            //MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, mMessage);
+            //todo
+            //延时1秒再发送事件 等待app初始化完成 1s这个事件待定
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, extra);
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 1000);
+
+        }catch (JSONException e){
+
         }
     }
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
         mMessage = message.getContent();
-        if(!TextUtils.isEmpty(message.getTopic())) {
-            mTopic=message.getTopic();
-        } else if(!TextUtils.isEmpty(message.getAlias())) {
-            mAlias=message.getAlias();
-        } else if(!TextUtils.isEmpty(message.getUserAccount())) {
-            mUserAccount=message.getUserAccount();
-        }
+        Log.i(TAG, "收到通知栏消息： " + mMessage);
     }
 
     @Override
@@ -97,8 +116,17 @@ public class MiPushMessageReceiver extends PushMessageReceiver {
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mRegId = cmdArg1;
+                Log.i(TAG, "得到RegId： " + mRegId);
                 MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID,mRegId);
             }
         }
+    }
+
+    private String mapToJsonString(Map<String,String> map)  throws JSONException{
+        JSONObject info = new JSONObject();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            info.put(entry.getKey(),entry.getValue());
+        }
+        return info.toString();
     }
 }

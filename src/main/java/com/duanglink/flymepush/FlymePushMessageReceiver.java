@@ -23,6 +23,7 @@ public class FlymePushMessageReceiver extends MzPushMessageReceiver {
     @Override
     @Deprecated
     public void onRegister(Context context, String pushid) {
+        Log.i(TAG, "收到pushid： " + pushid);
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_CLIENTID, pushid);
         //应用在接受返回的pushid
     }
@@ -36,6 +37,7 @@ public class FlymePushMessageReceiver extends MzPushMessageReceiver {
 
     @Override
     public void onMessage(Context context, String s) {
+        Log.i(TAG, "收到透传消息： " + s);
         //接收服务器推送的透传消息
         MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, s);
     }
