@@ -160,19 +160,27 @@
 
 ![](https://github.com/wangheng3751/my-resources/blob/master/images/mupush.png?raw=true)
 
+***
+
 #### 华为推送
 
 ![](https://github.com/wangheng3751/my-resources/blob/master/images/huaweipush1.png?raw=true)
 ![](https://github.com/wangheng3751/my-resources/blob/master/images/huaweipush2.png?raw=true)
 
+***
+
 #### 魅族推送
 
 ![](https://github.com/wangheng3751/my-resources/blob/master/images/meizupush.png?raw=true)
 
+***
+
 #### 个推推送
 
 ![](https://github.com/wangheng3751/my-resources/blob/master/images/getui.png?raw=true)
-        
+
+***
+
 # 特别说明
 
 本项目参考了另外一个大神的开源项目 [joyrun/MixPush](https://github.com/joyrun/MixPush) !
