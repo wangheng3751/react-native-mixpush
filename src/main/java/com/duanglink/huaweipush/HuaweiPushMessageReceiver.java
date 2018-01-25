@@ -11,6 +11,12 @@ import com.duanglink.rnmixpush.MixPushMoudle;
 import com.huawei.hms.support.api.push.PushReceiver;
 import com.igexin.sdk.PushManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,14 +59,24 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
 
     public void onEvent(Context context, Event event, Bundle extras) {
         if (Event.NOTIFICATION_OPENED.equals(event) || Event.NOTIFICATION_CLICK_BTN.equals(event)) {
+            String message = extras.getString(BOUND_KEY.pushMsgKey);
+            final String content=parseMessage(message);
             int notifyId = extras.getInt(BOUND_KEY.pushNotifyId, 0);
-            Log.i(TAG, "收到通知栏消息点击事件,notifyId:" + notifyId);
+            Log.i(TAG, "收到通知栏消息点击事件,notifyId:" + notifyId+",message:"+content);
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    MixPushMoudle.sendEvent(MixPushMoudle.EVENT_RECEIVE_REMOTE_NOTIFICATION, content);
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 1000);
+
             if (0 != notifyId) {
                 NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.cancel(notifyId);
             }
         }
-        String message = extras.getString(BOUND_KEY.pushMsgKey);
         super.onEvent(context, event, extras);
     }
 
@@ -73,5 +89,27 @@ public class HuaweiPushMessageReceiver extends PushReceiver {
         intent.putExtra("type", 2);
         intent.putExtra("pushState", pushState);
         context.sendBroadcast(intent);
+    }
+
+    private String  parseMessage(String message){
+        JSONObject info = new JSONObject();
+        try {
+            JSONArray json = new JSONArray(message);
+            if(json.length()>0){
+                for(int i=0;i<json.length();i++){
+                    JSONObject job = json.getJSONObject(i);
+                    Iterator<String> sIterator = job.keys();
+                    while(sIterator.hasNext()){
+                        String key = sIterator.next();
+                        String value = job.getString(key);
+                        info.put(key,value);
+                    }
+                }
+            }
+        }
+        catch (JSONException e){
+
+        }
+        return info.toString();
     }
 }
