@@ -14,7 +14,7 @@ import java.util.List;
  * Created by wangheng on 2017/12/4.
  */
 public class MixPushReactPackage implements ReactPackage {
-    @Override
+
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }
